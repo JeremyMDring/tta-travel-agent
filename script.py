@@ -141,6 +141,17 @@ def airport_parking_calculator():
       parking_choice_valid = "N"
   return parking_charge, num_of_cars
 
+def discount():
+  discount_choice_valid="N"
+  while discount_choice_valid == "N":
+    previous_traveller = input("\nHave you or anyone in your party travelled with us before? (Y/N): ")
+    if previous_traveller.upper() == "Y":
+      discount_choice_valid= "Y"
+    else:
+      discount_choice_valid="N"
+  return previous_traveller
+
+
 def holiday_pricer():
   welcome_message()
   travellers = total_travellers()
