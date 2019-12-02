@@ -48,13 +48,7 @@ def destination_flight():
 
 def total_travellers():
   adults = 0
-  children = 0
-  infants = 0
   adults_valid = "N"
-  children_choice_valid = "N"
-  children_valid = "N"
-  infant_choice_valid = "N"
-  infants_valid = "N"
 
   while adults_valid == "N":
     try:
@@ -64,45 +58,8 @@ def total_travellers():
     except ValueError:
       print(colored("Oops, please try again!", "yellow"))
   
-  while children_choice_valid == "N":
-    travelling_with_children = input("\nAre you travelling with children aged 2-17 years of age? (Y/N): ")
-    if travelling_with_children.upper() == "Y":
-      children_choice_valid = "Y"
-      while children_valid == "N":
-          try:
-              children = int(input("Please enter the number of children travelling: "))
-              if children >= 1:
-                children_valid = "Y"
-          except ValueError:
-            print(colored("Oops, please try again!", "yellow"))
-    elif travelling_with_children.upper() == "N":
-      children_choice_valid = "Y"
-      children = 0
-    else:
-      print(colored("Please enter either 'Y' for yes or 'N' for no.", "yellow"))
-      children_choice_valid = "N"
-      children = 0
-  
-  while infant_choice_valid == "N":
-    travelling_with_infants = input("\nAre you travelling with infants aged 0-2 years of age? (Y/N): ")
-    if travelling_with_infants.upper() == "Y":
-      infant_choice_valid = "Y"
-      while infants_valid == "N":
-        try:
-            infants = int(input("Please enter the number of infants travelling: "))
-            if infants >= 1:
-              infants_valid = "Y"
-        except ValueError:
-          print(colored("Oops, try again!", "yellow"))
-    elif travelling_with_infants.upper() == "N":
-      infant_choice_valid = "Y"
-      infants = 0
-    else:
-      print(colored("Please enter either 'Y' for yes or 'N' for no.", "yellow"))
-      infant_choice_valid = "N"
-      infants = 0
-  total = adults + children + infants
-  return adults, children, infants, total
+  total = adults 
+  return adults
 
 def duration_calculator():
   duration_valid = "N"
@@ -141,25 +98,13 @@ def airport_parking_calculator():
       parking_choice_valid = "N"
   return parking_charge, num_of_cars
 
-def discount():
-  discount_choice_valid="N"
-  while discount_choice_valid == "N":
-    previous_traveller = input("\nHave you or anyone in your party travelled with us before? (Y/N): ")
-    if previous_traveller.upper() == "Y":
-      discount_choice_valid= "Y"
-    else:
-      discount_choice_valid="N"
-  return previous_traveller
-
-
 def holiday_pricer():
   welcome_message()
   travellers = total_travellers()
   flight = destination_flight()
   days = duration_calculator()
-  basic_cost_adults = (flight[0] * travellers[0])
-  basic_cost_children = (flight[1] * travellers[1])
-  basic_cost_total = basic_cost_adults + basic_cost_children
+  basic_cost_adults = (flight[0] * travellers)
+  basic_cost_total = basic_cost_adults
   def baggage_calculator():
     standard_15kg_bag = 25.00
     standard_23kg_upgrade_bag = 30.00
@@ -173,7 +118,7 @@ def holiday_pricer():
     total_cost_upgrade = 0
     total_cost_excess_standard = 0
     total_cost_excess_upgrade = 0
-    standard_allowance = travellers[0] + travellers[1] 
+    standard_allowance = travellers 
     standard_choice_valid = "N"
     upgrade_choice_valid = "N"
     extra_standard_choice_valid = "N"
@@ -295,13 +240,13 @@ def holiday_pricer():
             try:
               if duration >= 1 and duration <= 7:
                 insurance_number_valid = "Y" 
-                insurance_cost = cost_7_days * travellers[3]
+                insurance_cost = cost_7_days * travellers
               elif duration > 7 and duration < 21:
                 insurance_number_valid = "Y"
-                insurance_cost = cost_7_to_21_days * travellers[3]
+                insurance_cost = cost_7_to_21_days * travellers
               else:
                 insurance_number_valid = "Y"
-                insurance_cost = cost_over_21_days * travellers[3]
+                insurance_cost = cost_over_21_days * travellers
             except ValueError:
               print(colored("Oops, please enter a number.", "yellow"))
         elif travel_insurance_required.upper() == "N":
@@ -333,13 +278,13 @@ def holiday_pricer():
             in_budget_destinations_australasia = []
             out_of_budget_destinations_australasia = []
             for destination in asia_destinations:
-              cost = (asia_destinations.get(destination)[0] * travellers[0]) + (asia_destinations.get(destination)[1] * travellers[1]) + total_baggage_cost + insurance + parking_price + commission
+              cost = (asia_destinations.get(destination)[0] * travellers) + total_baggage_cost + insurance + parking_price + commission
               if cost <= budget_fixed:
                 in_budget_destinations_asia.append(destination)
               else:
                 out_of_budget_destinations_asia.append(destination)
             for destination in australasia_destinations:
-              cost = (australasia_destinations.get(destination)[0] * travellers[0]) + (australasia_destinations.get(destination)[1] * travellers [1]) + total_baggage_cost + insurance + parking_price + commission
+              cost = (australasia_destinations.get(destination)[0] * travellers) + total_baggage_cost + insurance + parking_price + commission
               if cost <= budget_fixed:
                 in_budget_destinations_australasia.append(destination)
               else:
@@ -357,11 +302,7 @@ def holiday_pricer():
       print("\n" + "\033[1mPlease see below for a breakdown of your holiday costs: \033[0m" + "\n")
       print("\033[1mTotal flight cost:                             £{:0,.2f}\033[0m".format(basic_cost_total))
       print("  Price per adult:                               £{:0,.2f}".format(flight[0]))
-      print("  Number of Adults:                                    {}".format(travellers[0]))
-      print("  Price per child:                               £{:0,.2f}".format(flight[1]))
-      print("  Number of Children:                                  {}".format(travellers[1]))
-      print("  Price per infant:                                £0.00")
-      print("  Number of Infants:                                   {}".format(travellers[2]))
+      print("  Number of Adults:                                    {}".format(travellers))
       print("\033[1mTotal baggage cost:                              £{:0,.2f}\033[0m".format(total_baggage_cost))
       print("  No. of standard 15kg bags:                           {}".format(baggage[0]))
       print("  Cost of standard baggage:                       £{:0,.2f}".format(baggage[1]))
