@@ -60,13 +60,7 @@ def destination_flight():#Australasia only
         print(colored("We do not fly there yet! (You might need to check your spelling!)", "yellow"))
 def total_travellers():
   adults = 0
-  children = 0
-  infants = 0
   adults_valid = "N"
-  children_choice_valid = "N"
-  children_valid = "N"
-  infant_choice_valid = "N"
-  infants_valid = "N"
 
   while adults_valid == "N":
     try:
