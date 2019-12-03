@@ -10,63 +10,45 @@ def welcome_message():
   print(colored("/////////////////////////////////////////////////////////////", "blue"))
   print("\n")
 
-#def destination_flight(): #including Asia Destinations
-  #region_choice_valid = "N"
-  #region = ""
-  #while region_choice_valid == "N":
-    #try:
-      #region_choice = int(input("\n \n Please choose which region you want to visit \n\n 1)#Asia \n 2) Australasia \n\n Choice: "))
-      #if region_choice == 1:
-          #region_choice_valid = "Y"
-          #region = "Asia"
-      #elif region_choice == 2:
-          #region_choice_valid = "Y"
-          #region = "Australasia"
-      #else:
-        #region_choice_valid = "N"
-        #print(colored("\nWe don't fly to that region yet. Please try again!","yellow"))
-    #except ValueError:
-      #print(colored("Please enter '1' for Asia or '2' for Australasia.", "yellow")) 
+def destination_flight():
+  region_choice_valid = "N"
+  region = ""
+  while region_choice_valid == "N":
+    try:
+      region_choice = int(input("\n \n Please choose which region you want to visit \n\n 1) Asia \n 2) Australasia \n\n Choice: "))
+      if region_choice == 1:
+          region_choice_valid = "Y"
+          region = "Asia"
+      elif region_choice == 2:
+          region_choice_valid = "Y"
+          region = "Australasia"
+      else:
+        region_choice_valid = "N"
+        print(colored("\nWe don't fly to that region yet. Please try again!","yellow"))
+    except ValueError:
+      print(colored("Please enter '1' for Asia or '2' for Australasia.", "yellow")) 
 
-  #valid_destination = "N"
-  #while valid_destination == "N": 
-      #if region == "Asia":
-        #print("\n \nHere are our destinations in " + region + ": " + "\n \n" + ', '.join(asia_destinations.keys()))
-        #destination_choice = input("\nWhere would you like to fly? ")
-      #if region == "Australasia":
-        #print("\n \nHere are our destinations in " + region + ": " + "\n\n" + ', '.join(australasia_destinations.keys())+ "\n") 
-        #destination_choice = input("Where would you like to fly? ")
-      #if destination_choice.title() in asia_destinations:
-        #valid_destination = "Y"
-        #return asia_destinations.get(destination_choice.title())
-      #if destination_choice.title() in australasia_destinations:
-        #valid_destination = "Y"
-        #return australasia_destinations.get(destination_choice.title())
-      #else:
-        #valid_destination = "N"
-        #print(colored("We do not fly there yet! (You might need to check your spelling!)", #"yellow"))
-
-def destination_flight():#Australasia only
-      print("\n \nHere are our destinations in Australasia " + "\n\n" + ', '.join(australasia_destinations.keys())+ "\n") 
-      destination_choice = input("Where would you like to fly to? ")
+  valid_destination = "N"
+  while valid_destination == "N": 
+      if region == "Asia":
+        print("\n \nHere are our destinations in " + region + ": " + "\n \n" + ', '.join(asia_destinations.keys()))
+        destination_choice = input("\nWhere would you like to fly? ")
+      elif region == "Australasia":
+        print("\n \nHere are our destinations in " + region + ": " + "\n\n" + ', '.join(australasia_destinations.keys())+ "\n") 
+        destination_choice = input("Where would you like to fly? ")
       if destination_choice.title() in asia_destinations:
         valid_destination = "Y"
         return asia_destinations.get(destination_choice.title())
-      if destination_choice.title() in australasia_destinations:
+      elif destination_choice.title() in australasia_destinations:
         valid_destination = "Y"
         return australasia_destinations.get(destination_choice.title())
       else:
         valid_destination = "N"
         print(colored("We do not fly there yet! (You might need to check your spelling!)", "yellow"))
+
 def total_travellers():
   adults = 0
-  children = 0
-  infants = 0
   adults_valid = "N"
-  children_choice_valid = "N"
-  children_valid = "N"
-  infant_choice_valid = "N"
-  infants_valid = "N"
 
   while adults_valid == "N":
     try:
@@ -76,45 +58,8 @@ def total_travellers():
     except ValueError:
       print(colored("Oops, please try again!", "yellow"))
   
-  while children_choice_valid == "N":
-    travelling_with_children = input("\nAre you travelling with children aged 2-17 years of age? (Y/N): ")
-    if travelling_with_children.upper() == "Y":
-      children_choice_valid = "Y"
-      while children_valid == "N":
-          try:
-              children = int(input("Please enter the number of children travelling: "))
-              if children >= 1:
-                children_valid = "Y"
-          except ValueError:
-            print(colored("Oops, please try again!", "yellow"))
-    elif travelling_with_children.upper() == "N":
-      children_choice_valid = "Y"
-      children = 0
-    else:
-      print(colored("Please enter either 'Y' for yes or 'N' for no.", "yellow"))
-      children_choice_valid = "N"
-      children = 0
-  
-  while infant_choice_valid == "N":
-    travelling_with_infants = input("\nAre you travelling with infants aged 0-2 years of age? (Y/N): ")
-    if travelling_with_infants.upper() == "Y":
-      infant_choice_valid = "Y"
-      while infants_valid == "N":
-        try:
-            infants = int(input("Please enter the number of infants travelling: "))
-            if infants >= 1:
-              infants_valid = "Y"
-        except ValueError:
-          print(colored("Oops, try again!", "yellow"))
-    elif travelling_with_infants.upper() == "N":
-      infant_choice_valid = "Y"
-      infants = 0
-    else:
-      print(colored("Please enter either 'Y' for yes or 'N' for no.", "yellow"))
-      infant_choice_valid = "N"
-      infants = 0
-  total = adults + children + infants
-  return adults, children, infants, total
+  total = adults 
+  return adults
 
 def duration_calculator():
   duration_valid = "N"
@@ -158,9 +103,8 @@ def holiday_pricer():
   travellers = total_travellers()
   flight = destination_flight()
   days = duration_calculator()
-  basic_cost_adults = (flight[0] * travellers[0])
-  basic_cost_children = (flight[1] * travellers[1])
-  basic_cost_total = basic_cost_adults + basic_cost_children
+  basic_cost_adults = (flight[0] * travellers)
+  basic_cost_total = basic_cost_adults
   def baggage_calculator():
     standard_15kg_bag = 25.00
     standard_23kg_upgrade_bag = 30.00
@@ -174,7 +118,7 @@ def holiday_pricer():
     total_cost_upgrade = 0
     total_cost_excess_standard = 0
     total_cost_excess_upgrade = 0
-    standard_allowance = travellers[0] + travellers[1] 
+    standard_allowance = travellers 
     standard_choice_valid = "N"
     upgrade_choice_valid = "N"
     extra_standard_choice_valid = "N"
@@ -296,24 +240,21 @@ def holiday_pricer():
             try:
               if duration >= 1 and duration <= 7:
                 insurance_number_valid = "Y" 
-                insurance_cost = cost_7_days * travellers[3]
+                insurance_cost = cost_7_days * travellers
               elif duration > 7 and duration < 21:
                 insurance_number_valid = "Y"
-                insurance_cost = cost_7_to_21_days * travellers[3]
+                insurance_cost = cost_7_to_21_days * travellers
               else:
                 insurance_number_valid = "Y"
-                insurance_cost = cost_over_21_days * travellers[3]
+                insurance_cost = cost_over_21_days * travellers
             except ValueError:
               print(colored("Oops, please enter a number.", "yellow"))
         elif travel_insurance_required.upper() == "N":
-              insurance_choice_valid = "Y"
-              insurance_number_valid ="Y"
-              insurance_cost=0    
+              insurance_choice_valid = "Y"    
         else:
           print(colored("Please enter either 'Y' for yes or 'N' for no.", "yellow"))
           insurance_choice_valid = "N"
     return insurance_cost 
-
   insurance = travel_insurance_calculator()
   parking_price = (parking[0] * parking[1]) * days
   number_of_cars = parking[1]
@@ -337,19 +278,18 @@ def holiday_pricer():
             in_budget_destinations_australasia = []
             out_of_budget_destinations_australasia = []
             for destination in asia_destinations:
-              cost = (asia_destinations.get(destination)[0] * travellers[0]) + (asia_destinations.get(destination)[1] * travellers[1]) + total_baggage_cost + insurance + parking_price + commission
+              cost = (asia_destinations.get(destination)[0] * travellers) + total_baggage_cost + insurance + parking_price + commission
               if cost <= budget_fixed:
                 in_budget_destinations_asia.append(destination)
               else:
                 out_of_budget_destinations_asia.append(destination)
             for destination in australasia_destinations:
-              cost = (australasia_destinations.get(destination)[0] * travellers[0]) + (australasia_destinations.get(destination)[1] * travellers [1]) + total_baggage_cost + insurance + parking_price + commission
+              cost = (australasia_destinations.get(destination)[0] * travellers) + total_baggage_cost + insurance + parking_price + commission
               if cost <= budget_fixed:
                 in_budget_destinations_australasia.append(destination)
               else:
                 out_of_budget_destinations_australasia.append(destination)
-                #"\n \033[1mHere is a list of other destinations in your budget in Asia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_asia)) + 
-            return print( "\n \n \033[1mHere is a list of destinations in your budget in Australasia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_australasia)))
+            return print( "\n \033[1mHere is a list of other destinations in your budget in Asia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_asia)) + "\n \n \033[1mHere is a list of destinations in your budget in Australasia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_australasia)))
         elif see_suggestions.upper() == "N":
           print("Please come again")
           budget_choice_valid = "Y"
@@ -362,11 +302,7 @@ def holiday_pricer():
       print("\n" + "\033[1mPlease see below for a breakdown of your holiday costs: \033[0m" + "\n")
       print("\033[1mTotal flight cost:                             £{:0,.2f}\033[0m".format(basic_cost_total))
       print("  Price per adult:                               £{:0,.2f}".format(flight[0]))
-      print("  Number of Adults:                                    {}".format(travellers[0]))
-      print("  Price per child:                               £{:0,.2f}".format(flight[1]))
-      print("  Number of Children:                                  {}".format(travellers[1]))
-      print("  Price per infant:                                £0.00")
-      print("  Number of Infants:                                   {}".format(travellers[2]))
+      print("  Number of Adults:                                    {}".format(travellers))
       print("\033[1mTotal baggage cost:                              £{:0,.2f}\033[0m".format(total_baggage_cost))
       print("  No. of standard 15kg bags:                           {}".format(baggage[0]))
       print("  Cost of standard baggage:                       £{:0,.2f}".format(baggage[1]))
@@ -376,8 +312,7 @@ def holiday_pricer():
       print("  Cost of extra 15kg baggage:                     £{:0,.2f}".format(baggage[5]))
       print("  No. of extra 23kg bags:                              {}".format(baggage[6]))
       print("  Cost of extra 23kg baggage:                     £{:0,.2f}".format(baggage[7]))
-      if insurance > 0:
-        print("\033[1mTotal Insurance cost:                            £{:0,.2f}\033[0m".format(insurance))
+      print("\033[1mTotal Insurance cost:                            £{:0,.2f}\033[0m".format(insurance))
       print("\033[1mTotal Parking Charge:                            £{:0,.2f}\033[0m". format(parking_price))
       print("  Duration(nights):                                    {} ".format(days))
       print("  No.of cars:                                          {}".format(number_of_cars))
