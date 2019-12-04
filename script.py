@@ -158,7 +158,7 @@ def holiday_pricer():
                 standard_allowance = standard_allowance - number_of_standard_15kg_bags
                 total_cost_standard = (number_of_standard_15kg_bags * standard_15kg_bag)
               elif number_of_standard_15kg_bags > standard_allowance:
-                print(colored("You are only entitled to one bag per adult or child. Infants do not have a baggage allowance.", "yellow"))
+                print(colored("You are only entitled to one bag per traveller.", "yellow"))
                 standard_number_valid = "N"
               else:
                 standard_number_valid = "N"
@@ -181,7 +181,7 @@ def holiday_pricer():
                   upgrade_number_valid = "Y"
                   total_cost_upgrade = (number_of_upgrade_23kg_bags * standard_23kg_upgrade_bag)
               elif number_of_upgrade_23kg_bags > standard_allowance:
-                  print(colored("You are only entitled to one bag per traveller", "yellow"))
+                  print(colored("You are only entitled to one standard or upgraded bag per traveller", "yellow"))
                   standard_number_valid = "N"
               else:
                   upgrade_number_valid = "N"
