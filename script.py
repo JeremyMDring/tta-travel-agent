@@ -10,45 +10,59 @@ def welcome_message():
   print(colored("/////////////////////////////////////////////////////////////", "blue"))
   print("\n")
 
-def destination_flight():
-  region_choice_valid = "N"
-  region = ""
-  while region_choice_valid == "N":
-    try:
-      region_choice = int(input("\n \n Please choose which region you want to visit \n\n 1) Asia \n 2) Australasia \n\n Choice: "))
-      if region_choice == 1:
-          region_choice_valid = "Y"
-          region = "Asia"
-      elif region_choice == 2:
-          region_choice_valid = "Y"
-          region = "Australasia"
-      else:
-        region_choice_valid = "N"
-        print(colored("\nWe don't fly to that region yet. Please try again!","yellow"))
-    except ValueError:
-      print(colored("Please enter '1' for Asia or '2' for Australasia.", "yellow")) 
+#def destination_flight(): #including Asia Destinations
+  #region_choice_valid = "N"
+  #region = ""
+  #while region_choice_valid == "N":
+    #try:
+      #region_choice = int(input("\n \n Please choose which region you want to visit \n\n 1)#Asia \n 2) Australasia \n\n Choice: "))
+      #if region_choice == 1:
+          #region_choice_valid = "Y"
+          #region = "Asia"
+      #elif region_choice == 2:
+          #region_choice_valid = "Y"
+          #region = "Australasia"
+      #else:
+        #region_choice_valid = "N"
+        #print(colored("\nWe don't fly to that region yet. Please try again!","yellow"))
+    #except ValueError:
+      #print(colored("Please enter '1' for Asia or '2' for Australasia.", "yellow")) 
 
-  valid_destination = "N"
-  while valid_destination == "N": 
-      if region == "Asia":
-        print("\n \nHere are our destinations in " + region + ": " + "\n \n" + ', '.join(asia_destinations.keys()))
-        destination_choice = input("\nWhere would you like to fly? ")
-      elif region == "Australasia":
-        print("\n \nHere are our destinations in " + region + ": " + "\n\n" + ', '.join(australasia_destinations.keys())+ "\n") 
-        destination_choice = input("Where would you like to fly? ")
+  #valid_destination = "N"
+  #while valid_destination == "N": 
+      #if region == "Asia":
+        #print("\n \nHere are our destinations in " + region + ": " + "\n \n" + ', '.join(asia_destinations.keys()))
+        #destination_choice = input("\nWhere would you like to fly? ")
+      #if region == "Australasia":
+        #print("\n \nHere are our destinations in " + region + ": " + "\n\n" + ', '.join(australasia_destinations.keys())+ "\n") 
+        #destination_choice = input("Where would you like to fly? ")
+      #if destination_choice.title() in asia_destinations:
+        #valid_destination = "Y"
+        #return asia_destinations.get(destination_choice.title())
+      #if destination_choice.title() in australasia_destinations:
+        #valid_destination = "Y"
+        #return australasia_destinations.get(destination_choice.title())
+      #else:
+        #valid_destination = "N"
+        #print(colored("We do not fly there yet! (You might need to check your spelling!)", #"yellow"))
+
+def destination_flight():#Australasia only
+      print("\n \nHere are our destinations in Australasia " + "\n\n" + ', '.join(australasia_destinations.keys())+ "\n") 
+      destination_choice = input("Where would you like to fly to? ")
       if destination_choice.title() in asia_destinations:
         valid_destination = "Y"
         return asia_destinations.get(destination_choice.title())
-      elif destination_choice.title() in australasia_destinations:
+      if destination_choice.title() in australasia_destinations:
         valid_destination = "Y"
         return australasia_destinations.get(destination_choice.title())
       else:
         valid_destination = "N"
         print(colored("We do not fly there yet! (You might need to check your spelling!)", "yellow"))
-
 def total_travellers():
   adults = 0
+  
   adults_valid = "N"
+  
 
   while adults_valid == "N":
     try:
@@ -58,7 +72,8 @@ def total_travellers():
     except ValueError:
       print(colored("Oops, please try again!", "yellow"))
   
-  total = adults 
+  
+  total = adults
   return adults
 
 def duration_calculator():
@@ -129,7 +144,7 @@ def holiday_pricer():
     extra_upgrade_number_valid = "N"
     
       
-    print(colored("\nAdults and children (excluding infants) are entitled to one standard 15kg bag each at a cost of £{:0,.2f} per bag. You may opt to upgrade your standard baggage to a 23kg bag at the cost of £{:0,.2f} per bag. Additional bags are charged at £{:0,.2f} for a standard bag or £{:0,.2f} for a upgraded bag. \n".format(standard_15kg_bag, standard_23kg_upgrade_bag, excess_15kg_bag, excess_23kg_bag), "magenta"))
+    print(colored("\nAll travellers are entitled to one standard 15kg bag each at a cost of £{:0,.2f} per bag. You may opt to upgrade your standard baggage to a 23kg bag at the cost of £{:0,.2f} per bag. Additional bags are charged at £{:0,.2f} for a standard bag or £{:0,.2f} for a upgraded bag. \n".format(standard_15kg_bag, standard_23kg_upgrade_bag, excess_15kg_bag, excess_23kg_bag), "magenta"))
     
     while standard_choice_valid == "N":
         standard_baggage_required = input("\nDo you require standard baggage? (Y/N): ")
@@ -143,7 +158,7 @@ def holiday_pricer():
                 standard_allowance = standard_allowance - number_of_standard_15kg_bags
                 total_cost_standard = (number_of_standard_15kg_bags * standard_15kg_bag)
               elif number_of_standard_15kg_bags > standard_allowance:
-                print(colored("You are only entitled to one bag per adult or child. Infants do not have a baggage allowance.", "yellow"))
+                print(colored("You are only entitled to one bag per traveller.", "yellow"))
                 standard_number_valid = "N"
               else:
                 standard_number_valid = "N"
@@ -166,7 +181,7 @@ def holiday_pricer():
                   upgrade_number_valid = "Y"
                   total_cost_upgrade = (number_of_upgrade_23kg_bags * standard_23kg_upgrade_bag)
               elif number_of_upgrade_23kg_bags > standard_allowance:
-                  print(colored("You are only entitled to one bag per adult or child. Infants do not have a baggage allowance.", "yellow"))
+                  print(colored("You are only entitled to one standard or upgraded bag per traveller", "yellow"))
                   standard_number_valid = "N"
               else:
                   upgrade_number_valid = "N"
@@ -250,11 +265,14 @@ def holiday_pricer():
             except ValueError:
               print(colored("Oops, please enter a number.", "yellow"))
         elif travel_insurance_required.upper() == "N":
-              insurance_choice_valid = "Y"    
+              insurance_choice_valid = "Y"
+              insurance_number_valid ="Y"
+              insurance_cost=0    
         else:
           print(colored("Please enter either 'Y' for yes or 'N' for no.", "yellow"))
           insurance_choice_valid = "N"
     return insurance_cost 
+
   insurance = travel_insurance_calculator()
   parking_price = (parking[0] * parking[1]) * days
   number_of_cars = parking[1]
@@ -289,7 +307,8 @@ def holiday_pricer():
                 in_budget_destinations_australasia.append(destination)
               else:
                 out_of_budget_destinations_australasia.append(destination)
-            return print( "\n \033[1mHere is a list of other destinations in your budget in Asia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_asia)) + "\n \n \033[1mHere is a list of destinations in your budget in Australasia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_australasia)))
+                #"\n \033[1mHere is a list of other destinations in your budget in Asia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_asia)) + 
+            return print( "\n \n \033[1mHere is a list of destinations in your budget in Australasia:\033[0m \n \n {}".format(", ".join(in_budget_destinations_australasia)))
         elif see_suggestions.upper() == "N":
           print("Please come again")
           budget_choice_valid = "Y"
@@ -303,18 +322,24 @@ def holiday_pricer():
       print("\033[1mTotal flight cost:                             £{:0,.2f}\033[0m".format(basic_cost_total))
       print("  Price per adult:                               £{:0,.2f}".format(flight[0]))
       print("  Number of Adults:                                    {}".format(travellers))
+      
       print("\033[1mTotal baggage cost:                              £{:0,.2f}\033[0m".format(total_baggage_cost))
       print("  No. of standard 15kg bags:                           {}".format(baggage[0]))
-      print("  Cost of standard baggage:                       £{:0,.2f}".format(baggage[1]))
-      print("  No. of upgraded standard 23kg bag                    {}".format(baggage[2]))
-      print("  Cost of upgraded baggage:                       £{:0,.2f}".format(baggage[3]))
-      print("  No. of extra 15kg bags:                              {}".format(baggage[4]))
-      print("  Cost of extra 15kg baggage:                     £{:0,.2f}".format(baggage[5]))
-      print("  No. of extra 23kg bags:                              {}".format(baggage[6]))
-      print("  Cost of extra 23kg baggage:                     £{:0,.2f}".format(baggage[7]))
-      print("\033[1mTotal Insurance cost:                            £{:0,.2f}\033[0m".format(insurance))
-      print("\033[1mTotal Parking Charge:                            £{:0,.2f}\033[0m". format(parking_price))
-      print("  Duration(nights):                                    {} ".format(days))
+      print("  Cost of standard baggage:                      £{:0,.2f}".format(baggage[1]))
+      if baggage[2]>0:
+        print("  No. of upgraded standard 23kg bag                    {}".format(baggage[2]))
+        print("  Cost of upgraded baggage:                       £{:0,.2f}".format(baggage[3]))
+      if baggage[4]>0:
+        print("  No. of extra 15kg bags:                              {}".format(baggage[4]))
+        print("  Cost of extra 15kg baggage:                     £{:0,.2f}".format(baggage[5]))
+      if baggage[6]>0:
+        print("  No. of extra 23kg bags:                              {}".format(baggage[6]))
+        print("  Cost of extra 23kg baggage:                     £{:0,.2f}".format(baggage[7]))
+      if insurance > 0:
+        print("\033[1mTotal Insurance cost:                            £{:0,.2f}\033[0m".format(insurance))
+      if parking_price > 0:
+        print("\033[1mTotal Parking Charge:                            £{:0,.2f}\033[0m". format(parking_price))
+      print("  Duration(nights):                                   {}".format(days))
       print("  No.of cars:                                          {}".format(number_of_cars))
       print("\033[1mCommission Charge:                                £{:0,.2f}\033[0m".format(commission))
       print("(parking not included)")
